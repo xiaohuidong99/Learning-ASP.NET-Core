@@ -3,6 +3,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using TheWorld.Models;
 using TheWorld.Services;
@@ -29,21 +30,32 @@ namespace TheWorld
         {
             services.AddMvc();
 
+            services.AddLogging();
+
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<WorldContext>();
 
+            services.AddTransient<WorldContextSeedData>();
+            services.AddScoped<IWorldRepository, WorldRepository>();
 
             // TODO: Implement real emailService using info @ docs.asp.net
-            services.AddSingleton<IEmailService, DebugEmailService>();
+            services.AddScoped<IEmailService, DebugEmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, WorldContextSeedData seeder, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
+                loggerFactory.AddDebug(LogLevel.Information);
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                loggerFactory.AddDebug(LogLevel.Error);
+                // TODO: Implement error handling page for user consumption
+                app.UseExceptionHandler("App/Error");
             }
 
             app.UseFileServer();
@@ -57,10 +69,13 @@ namespace TheWorld
                     );
             });
 
-            app.Run(async (context) =>
+            app.Run(async context =>
             {
                 await context.Response.WriteAsync("Hello World!");
             });
+
+            // TODO: Eventually not needed?
+            seeder.EnsureSeedData();
         }
 
         // Entry point for the application.

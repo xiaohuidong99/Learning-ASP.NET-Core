@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 using TheWorld.Models;
 using TheWorld.Services;
 using TheWorld.ViewModels;
@@ -8,19 +10,19 @@ namespace TheWorld.Controllers.Web
     public class AppController : Controller
     {
         private readonly IEmailService _emailService;
-        private readonly WorldContext _context;
+        private readonly IWorldRepository _repository;
 
-        public AppController(IEmailService emailService, WorldContext context)
+        public AppController(IEmailService emailService, IWorldRepository repository)
         {
             _emailService = emailService;
-            _context = context;
+            _repository = repository;
         }
 
         // GET: /<controller>/
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _repository.GetAllTripsAsync());
         }
 
         // GET: /<controller>/
