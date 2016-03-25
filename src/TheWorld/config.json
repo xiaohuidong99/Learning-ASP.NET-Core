@@ -1,0 +1,8 @@
+﻿{
+  "AppSettings": {
+    "SiteEmailAddress": "rats3g@gmail.com"
+  },
+  "Data": {
+    "WorldContextConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TheWorldDB"
+  }
+}
