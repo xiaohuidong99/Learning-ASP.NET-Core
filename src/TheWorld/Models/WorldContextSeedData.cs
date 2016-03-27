@@ -1,27 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace TheWorld.Models
 {
     public class WorldContextSeedData
     {
         private readonly WorldContext _context;
+        private UserManager<WorldUser> _userManager;
 
-        public WorldContextSeedData(WorldContext context)
+        public WorldContextSeedData(WorldContext context, UserManager<WorldUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public void EnsureSeedData()
+        public async Task EnsureSeedDataAsync()
         {
+            if (await _userManager.FindByEmailAsync("test.user@theworld.com") == null)
+            {
+                var newUser = new WorldUser()
+                {
+                    UserName = "testuser",
+                    Email = "test.user@theworld.com"
+                };
+
+                // Does not deal with IdentityResult as it is not important here
+                await _userManager.CreateAsync(newUser, "P@ssw0rd");
+            }
+
             if (_context.Trips.Any()) return;
 
             var usTrip = new Trip()
             {
                 Name = "US Trip",
                 Created = DateTime.Now,
-                Username = "",
+                Username = "testuser",
                 Stops = new List<Stop>()
                 {
                     new Stop() {Name = "Atlanta, GA", Arrival = new DateTime(2014, 6, 4), Latitude = 33.748995, Longitude = -84.387982, Order = 0},
@@ -40,7 +56,7 @@ namespace TheWorld.Models
             {
                 Name = "World Trip",
                 Created = DateTime.Now,
-                Username = "",
+                Username = "testuser",
                 Stops = new List<Stop>()
                 {
                     new Stop() { Order = 0, Latitude = 33.748995, Longitude = -84.387982, Name = "Atlanta, Georgia", Arrival = DateTime.Parse("Jun 3, 2014")},

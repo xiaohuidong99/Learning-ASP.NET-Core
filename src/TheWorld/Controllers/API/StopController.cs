@@ -8,12 +8,14 @@ using Microsoft.Extensions.Logging;
 using TheWorld.Models;
 using TheWorld.ViewModels;
 using System.Linq;
+using Microsoft.AspNet.Authorization;
 using TheWorld.Services;
 
 // TODO: Implement Put/Patch and Delete operation for stops
 
 namespace TheWorld.Controllers.API
 {
+    [Authorize]
     [Route("api/trips/{tripName}/stops")]
     public class StopController : Controller
     {
@@ -34,7 +36,7 @@ namespace TheWorld.Controllers.API
         {
             try
             {
-                var results = await _repository.GetTripByNameAsync(tripName);
+                var results = await _repository.GetTripByNameAsync(tripName, User.Identity.Name);
 
                 return Json(results == null
                     ? null
@@ -67,7 +69,7 @@ namespace TheWorld.Controllers.API
                     newStop.Longitude = coordinateResult.Longitude;
                     newStop.Latitude = coordinateResult.Latitude;
 
-                    await _repository.AddStopAsync(tripName, newStop);
+                    await _repository.AddStopAsync(tripName, User.Identity.Name, newStop);
 
                     if (await _repository.CommitAsync())
                     {

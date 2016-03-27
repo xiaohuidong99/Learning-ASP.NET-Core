@@ -80,6 +80,40 @@ namespace TheWorld.Models
             }
         }
 
+        public IEnumerable<Trip> GetUserTripsWithStops(string username)
+        {
+            try
+            {
+                return _context.Trips
+                    .Include(x => x.Stops)
+                    .OrderBy(x => x.Name)
+                    .Where(x => x.Username == username)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not get all trips with stops for user from database.", e);
+                return null;
+            }
+        }
+
+        public async Task<List<Trip>> GetUserTripsWithStopsAsync(string username)
+        {
+            try
+            {
+                return await _context.Trips
+                    .Include(x => x.Stops)
+                    .OrderBy(x => x.Name)
+                    .Where(x => x.Username == username)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Could not get all trips with stops for user asynchronously from database.", e);
+                return null;
+            }
+        }
+
         public void AddTrip(Trip newTrip)
         {
             _context.Add(newTrip);
@@ -95,23 +129,23 @@ namespace TheWorld.Models
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public Trip GetTripByName(string tripName)
+        public Trip GetTripByName(string tripName, string username)
         {
             return _context.Trips
                 .Include(x => x.Stops)
-                .FirstOrDefault(x => x.Name == tripName);
+                .FirstOrDefault(x => x.Name == tripName && x.Username == username);
         }
 
-        public async Task<Trip> GetTripByNameAsync(string tripName)
+        public async Task<Trip> GetTripByNameAsync(string tripName, string username)
         {
             return await _context.Trips
                 .Include(x => x.Stops)
-                .FirstOrDefaultAsync(x => x.Name == tripName);
+                .FirstOrDefaultAsync(x => x.Name == tripName && x.Username == username);
         }
 
-        public void AddStop(string tripName, Stop newStop)
+        public void AddStop(string tripName, string username, Stop newStop)
         {
-            var trip = GetTripByName(tripName);
+            var trip = GetTripByName(tripName, username);
 
             // TODO: Fix bug caused when number of stops is 0 (info on pluralsight)
             newStop.Order = trip.Stops.Max(x => x.Order) + 1;
@@ -119,9 +153,9 @@ namespace TheWorld.Models
             _context.Stops.Add(newStop);
         }
 
-        public async Task AddStopAsync(string tripName, Stop newStop)
+        public async Task AddStopAsync(string tripName, string username, Stop newStop)
         {
-            var trip = await GetTripByNameAsync(tripName);
+            var trip = await GetTripByNameAsync(tripName, username);
 
             newStop.Order = trip.Stops.Max(x => x.Order) + 1;
 

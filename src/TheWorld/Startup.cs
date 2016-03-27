@@ -1,7 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,11 +36,41 @@ namespace TheWorld
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddMvc(config =>
+            {
+                // TODO: Add SSL to server so that HTTPS can be used
+                ////config.Filters.Add(new RequireHttpsAttribute());
+            })
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
+
+            // TODO: Setup email confirmation | Two Factor Authentification
+            services.AddIdentity<WorldUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+                // TODO: Implement OAuth2 or OpenID
+                config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents()
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == (int) HttpStatusCode.OK)
+                        {
+                            ctx.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                };
+            })
+                .AddEntityFrameworkStores<WorldContext>();
 
             services.AddLogging();
 
@@ -52,7 +87,7 @@ namespace TheWorld
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, WorldContextSeedData seeder, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, WorldContextSeedData seeder, ILoggerFactory loggerFactory)
         {
             // TODO: Change logging output to more permanent storage type (blob, file)
             if (env.IsDevelopment())
@@ -68,6 +103,8 @@ namespace TheWorld
             }
 
             app.UseFileServer();
+
+            app.UseIdentity();
 
             Mapper.Initialize(config =>
             {
@@ -90,10 +127,11 @@ namespace TheWorld
             });
 
             // TODO: Eventually not needed?
-            seeder.EnsureSeedData();
+            await seeder.EnsureSeedDataAsync();
         }
 
         // Entry point for the application.
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
+

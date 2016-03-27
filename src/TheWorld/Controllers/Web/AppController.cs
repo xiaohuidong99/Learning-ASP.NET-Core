@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Authorization;
 using TheWorld.Models;
 using TheWorld.Services;
 using TheWorld.ViewModels;
@@ -19,7 +20,15 @@ namespace TheWorld.Controllers.Web
 
         // GET: /<controller>/
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: /<controller>/
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Trips()
         {
             return View(await _repository.GetAllTripsAsync());
         }
