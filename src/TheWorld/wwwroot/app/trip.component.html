@@ -1,0 +1,7 @@
+﻿<table class="table table-responsive table-striped">
+    <tr *ngFor="#trip of trips">
+        <td>{{ trip.name }}</td>
+        <td>{{ trip.created | date:'MM-d-yyyy' }}</td>
+        <td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
+    </tr>
+</table>

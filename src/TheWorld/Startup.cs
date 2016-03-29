@@ -53,6 +53,7 @@ namespace TheWorld
                 config.Password.RequiredLength = 8;
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
                 // TODO: Implement OAuth2 or OpenID
+                // TODO: Implement 3rd party login using google/facebook/etc
                 config.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents()
                 {
                     OnRedirectToLogin = ctx =>

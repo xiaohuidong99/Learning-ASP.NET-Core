@@ -4,6 +4,8 @@
 }
 
 <div class="row">
+    <trip-app class="col-md-6 col-md-offset-3">Loading...</trip-app>
+
     <div class="col-md-6">
         <h1>The World</h1>
         <p>This will be a fun website soon!</p>
@@ -34,3 +36,20 @@
         </ul>
     </div>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_AngularScriptsPartial"); }
+    <script>
+        System.config({
+            packages: {
+                "../app": {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('../app/main')
+                .then(null, console.error.bind(console));
+    </script>
+}
+

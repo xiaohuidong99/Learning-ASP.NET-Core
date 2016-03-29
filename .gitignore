@@ -212,4 +212,7 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 #Client side lib files
-*/lib/
+**/lib/
+typings/
+app/**/*.js
+app/**/*.map
