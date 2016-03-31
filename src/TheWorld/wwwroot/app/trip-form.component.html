@@ -1,0 +1,13 @@
+﻿<form *ngIf="active" [ngFormModel]="tripForm" (ngSubmit)="add()">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" ngControl="name" id="name" required
+               [(ngModel)]="model.name" class="form-control"/>
+        <div *ngIf="name.dirty && !name.valid">
+            <span *ngIf="name.errors.required" class="text-warning">Name is required.</span>
+            <span *ngIf="name.errors.minlength" class="text-warning">Name must be at least five characters.</span>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="!tripForm.valid" class="btn btn-success">Add</button>
+</form>
