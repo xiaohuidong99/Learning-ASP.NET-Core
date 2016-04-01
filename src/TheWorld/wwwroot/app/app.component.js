@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "./trip.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(["angular2/core", "angular2/router"], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
-    var TripEditComponent;
+    var core_1, router_1, trip_component_1;
+    var AppComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -19,23 +19,30 @@ System.register(["angular2/core", "angular2/router"], function(exports_1, contex
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (trip_component_1_1) {
+                trip_component_1 = trip_component_1_1;
             }],
         execute: function() {
-            TripEditComponent = (function () {
-                function TripEditComponent() {
+            AppComponent = (function () {
+                function AppComponent() {
                 }
-                TripEditComponent = __decorate([
+                AppComponent = __decorate([
                     core_1.Component({
-                        selector: "trip-edit",
-                        templateUrl: "trip-edit.component",
-                        directives: [router_1.ROUTER_DIRECTIVES]
-                    }), 
+                        selector: "my-app",
+                        template: "\n        <h1>App Component</h1>\n        <router-outlet></router-outlet>\n    ",
+                        directives: [router_1.ROUTER_DIRECTIVES],
+                        providers: [router_1.ROUTER_PROVIDERS]
+                    }),
+                    router_1.RouteConfig([
+                        { path: "/", name: "Trips", component: trip_component_1.TripComponent, useAsDefault: true }
+                    ]), 
                     __metadata('design:paramtypes', [])
-                ], TripEditComponent);
-                return TripEditComponent;
+                ], AppComponent);
+                return AppComponent;
             }());
-            exports_1("TripEditComponent", TripEditComponent);
+            exports_1("AppComponent", AppComponent);
         }
     }
 });
-//# sourceMappingURL=trip-edit.component.js.map
+//# sourceMappingURL=app.component.js.map

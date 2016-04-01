@@ -10,6 +10,9 @@ System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-fo
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
+    var __param = (this && this.__param) || function (paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    };
     var core_1, http_1, router_1, trip_form_component_1, trips_service_1, date_pipe_1, loading_1;
     var TripListComponent;
     return {
@@ -54,16 +57,18 @@ System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-fo
                         .subscribe(function (trip) { return _this.trips.push(trip); }, function (error) { return console.log("There was an error: " + error); }, function () { return _this.isBusy = false; });
                 };
                 TripListComponent.prototype.onSelect = function (selectedTrip) {
-                    this.router.navigate(["TripDetail", { id: selectedTrip.id }]);
+                    this.router.navigate(["TripEdit", { name: selectedTrip.name }]);
                 };
                 TripListComponent = __decorate([
                     core_1.Component({
                         selector: "trip-list",
                         templateUrl: "./trip.list.component.html",
-                        providers: [http_1.HTTP_PROVIDERS, trips_service_1.TripsService, router_1.Router],
+                        providers: [http_1.HTTP_PROVIDERS, router_1.Router],
                         directives: [trip_form_component_1.TripFormComponent, loading_1.Loading],
                         pipes: [date_pipe_1.DatePipe]
-                    }), 
+                    }),
+                    router_1.RouteConfig([]),
+                    __param(1, core_1.Inject(router_1.Router)), 
                     __metadata('design:paramtypes', [trips_service_1.TripsService, router_1.Router])
                 ], TripListComponent);
                 return TripListComponent;

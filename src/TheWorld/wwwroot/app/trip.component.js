@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./trip-list.component", "./trip-edit.component"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "./trip-list.component", "./trips.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/router", "./trip-list.component", ".
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, trip_list_component_1, trip_edit_component_1;
+    var core_1, router_1, trip_list_component_1, trips_service_1;
     var TripComponent;
     return {
         setters:[
@@ -23,8 +23,8 @@ System.register(["angular2/core", "angular2/router", "./trip-list.component", ".
             function (trip_list_component_1_1) {
                 trip_list_component_1 = trip_list_component_1_1;
             },
-            function (trip_edit_component_1_1) {
-                trip_edit_component_1 = trip_edit_component_1_1;
+            function (trips_service_1_1) {
+                trips_service_1 = trips_service_1_1;
             }],
         execute: function() {
             TripComponent = (function () {
@@ -33,12 +33,12 @@ System.register(["angular2/core", "angular2/router", "./trip-list.component", ".
                 TripComponent = __decorate([
                     core_1.Component({
                         selector: "trip-app",
-                        template: "\n        <router-outlet></router-outlet>\n    ",
-                        directives: [router_1.RouterOutlet, router_1.ROUTER_DIRECTIVES]
+                        template: "\n        <h1>TripController</h1>\n        <router-outlet></router-outlet>\n    ",
+                        directives: [router_1.ROUTER_DIRECTIVES],
+                        providers: [trips_service_1.TripsService]
                     }),
                     router_1.RouteConfig([
-                        { path: "/trips", name: "Trips", component: trip_list_component_1.TripListComponent, useAsDefault: true },
-                        { path: "/trip/:id", name: "TripEdit", component: trip_edit_component_1.TripEditComponent }
+                        { path: "/", name: "TripLists", component: trip_list_component_1.TripListComponent, useAsDefault: true },
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], TripComponent);

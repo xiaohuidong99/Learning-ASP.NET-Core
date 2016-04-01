@@ -1,26 +1,32 @@
-﻿import { Component, OnInit } from "angular2/core";
+﻿import { Component, OnInit, Inject } from "angular2/core";
 import { HTTP_PROVIDERS } from "angular2/http";
-import { Router } from "angular2/router";
+import { Router, RouteConfig } from "angular2/router";
 
 import { TripFormComponent } from "./trip-form.component";
+
 import { TripsService } from "./trips.service";
+
 import { Trip } from "./Trip";
+
 import { DatePipe } from "./date.pipe";
 import { Loading } from "./loading"
+
 
 @Component({
     selector: "trip-list",
     templateUrl: "./trip.list.component.html",
-    providers: [HTTP_PROVIDERS, TripsService, Router],
+    providers: [HTTP_PROVIDERS, Router],
     directives: [TripFormComponent, Loading],
     pipes: [DatePipe]
 })
+
+@RouteConfig([])
 
 export class TripListComponent implements OnInit {
     private trips: Trip[];
     private isBusy: boolean;
 
-    constructor(private tripsService: TripsService, private router: Router) {}
+    constructor(private tripsService: TripsService, @Inject(Router) private router: Router) {}
 
     ngOnInit() {
         this.isBusy = true;
@@ -41,6 +47,6 @@ export class TripListComponent implements OnInit {
     }
 
     onSelect(selectedTrip: Trip) {
-        this.router.navigate(["TripDetail", { id: selectedTrip.id }]);
+        this.router.navigate(["TripEdit", { name: selectedTrip.name }]);
     }
 }
