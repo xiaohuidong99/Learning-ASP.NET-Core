@@ -1,7 +1,21 @@
 ﻿<div>
-    <a [routerLink]="TripsList"><i class="fa fa-angle-left"> Back</i></a>
-    <div class="col-md-6">
-        <h1>Trip Edit</h1>
+    <div><a class="btn btn-sm btn-default" [routerLink]="['/TripsList']"><i class="fa fa-angle-left"> Back</i></a>
+    </div>
+    <div class="col-md-3">
+        <h2>{{ tripName }}</h2>
+        <wait-cursor *ngIf="isBusy"> Loading...</wait-cursor>
+        <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+        <table class="table table-responsive table-striped">
+            <tr>
+                <th>Location</th>
+                <th>Arrival</th>
+            </tr>
+            <tr *ngFor="#stop of stops">
+                <td>{{ stop.name }}</td>
+                <td>{{ stop.arrival | datePipe }}</td>
+            </tr>
+        </table>
 
         <form>
             <div class="form-group">
@@ -18,14 +32,11 @@
         </form>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-9">
         <h2>The Map</h2>
-
-        <ul>
-            @foreach (var trip in Model)
-            {
-            <li>@trip.Name (@trip.Created.ToString("d"))</li>
-            }
-        </ul>
+        <div id="map"></div>
     </div>
 </div>
+
+<script src="~/lib/gmaps/gmaps.min.js"></script>
+<script src="~/lib/travelmap/travelmap.min.js"></script>

@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-form.component", "./trips.service", "./date.pipe", "./loading"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "./trip-form.component", "./trips.service", "./date.pipe", "./loading"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,18 +10,12 @@ System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-fo
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var __param = (this && this.__param) || function (paramIndex, decorator) {
-        return function (target, key) { decorator(target, key, paramIndex); }
-    };
-    var core_1, http_1, router_1, trip_form_component_1, trips_service_1, date_pipe_1, loading_1;
+    var core_1, router_1, trip_form_component_1, trips_service_1, date_pipe_1, loading_1;
     var TripListComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (http_1_1) {
-                http_1 = http_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -61,14 +55,10 @@ System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-fo
                 };
                 TripListComponent = __decorate([
                     core_1.Component({
-                        selector: "trip-list",
-                        templateUrl: "./trip.list.component.html",
-                        providers: [http_1.HTTP_PROVIDERS, router_1.Router],
+                        templateUrl: "./trip-list.component.html",
                         directives: [trip_form_component_1.TripFormComponent, loading_1.Loading],
                         pipes: [date_pipe_1.DatePipe]
-                    }),
-                    router_1.RouteConfig([]),
-                    __param(1, core_1.Inject(router_1.Router)), 
+                    }), 
                     __metadata('design:paramtypes', [trips_service_1.TripsService, router_1.Router])
                 ], TripListComponent);
                 return TripListComponent;

@@ -1,6 +1,6 @@
-﻿import {Component, EventEmitter, Output} from "angular2/core";
-import {FormBuilder, Validators, Control, ControlGroup, FORM_DIRECTIVES} from "angular2/common";
-import {Trip} from "./trip";
+﻿import { Component, EventEmitter, Output } from "angular2/core";
+import { FormBuilder, Validators, Control, ControlGroup, FORM_DIRECTIVES } from "angular2/common";
+import { Trip} from "./trip.model";
 
 @Component({
     selector: "trip-form",

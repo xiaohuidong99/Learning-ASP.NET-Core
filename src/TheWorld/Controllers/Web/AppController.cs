@@ -28,9 +28,9 @@ namespace TheWorld.Controllers.Web
         // GET: /<controller>/
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Trips()
+        public IActionResult Trips()
         {
-            return View(await _repository.GetAllTripsAsync());
+            return View();
         }
 
         // GET: /<controller>/

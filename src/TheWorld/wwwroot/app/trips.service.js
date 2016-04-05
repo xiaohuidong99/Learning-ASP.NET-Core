@@ -45,6 +45,13 @@ System.register(["angular2/core", "angular2/http", "rxjs/Rx"], function(exports_
                     })
                         .catch(this.handleError);
                 };
+                TripsService.prototype.getStops = function (stop) {
+                    return this.http.get("/api/trips/" + stop + "/stops")
+                        .map(function (response) {
+                        return response.json();
+                    })
+                        .catch(this.handleError);
+                };
                 TripsService.prototype.handleError = function (error) {
                     console.log(error);
                     return Rx_1.Observable.throw(error.json().error || "Server error");

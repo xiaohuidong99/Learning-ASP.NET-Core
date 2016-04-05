@@ -18,4 +18,4 @@ System.register([], function(exports_1, context_1) {
         }
     }
 });
-//# sourceMappingURL=trip.js.map
+//# sourceMappingURL=trip.model.js.map

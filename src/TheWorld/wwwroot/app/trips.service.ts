@@ -2,7 +2,8 @@
 import { Http, Response, Headers, RequestOptions } from "angular2/http";
 import { Observable } from "rxjs/Rx";
 
-import { Trip } from "./trip"
+import { Trip } from "./trip.model";
+import { Stop } from "./stop.model";
 
 @Injectable()
 export class TripsService {
@@ -24,6 +25,14 @@ export class TripsService {
         return this.http.post("/api/trips", body, options)
             .map((response: Response) =>
                 <Trip>response.json()
+            )
+            .catch(this.handleError);
+    }
+
+    getStops(stop: string) {
+        return this.http.get(`/api/trips/${stop}/stops`)
+            .map((response: Response) =>
+                <Stop[]>response.json()
             )
             .catch(this.handleError);
     }

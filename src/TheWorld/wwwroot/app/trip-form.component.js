@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/common", "./trip"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/common", "./trip.model"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/common", "./trip"], function(exports
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, trip_1;
+    var core_1, common_1, trip_model_1;
     var TripFormComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(["angular2/core", "angular2/common", "./trip"], function(exports
             function (common_1_1) {
                 common_1 = common_1_1;
             },
-            function (trip_1_1) {
-                trip_1 = trip_1_1;
+            function (trip_model_1_1) {
+                trip_model_1 = trip_model_1_1;
             }],
         execute: function() {
             TripFormComponent = (function () {
@@ -34,12 +34,12 @@ System.register(["angular2/core", "angular2/common", "./trip"], function(exports
                     this.tripForm = builder.group({
                         name: this.name
                     });
-                    this.model = new trip_1.Trip("");
+                    this.model = new trip_model_1.Trip("");
                 }
                 TripFormComponent.prototype.add = function () {
                     var _this = this;
                     this.onSubmit.emit(this.model);
-                    this.model = new trip_1.Trip();
+                    this.model = new trip_model_1.Trip();
                     this.active = false;
                     setTimeout(function () { return _this.active = true; }, 0);
                 };

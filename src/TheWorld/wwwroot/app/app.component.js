@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./trip.component"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/http", "angular2/router", "./trip-list.component", "./trip-edit.component", "./trips.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,18 +10,27 @@ System.register(["angular2/core", "angular2/router", "./trip.component"], functi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, trip_component_1;
+    var core_1, http_1, router_1, trip_list_component_1, trip_edit_component_1, trips_service_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (trip_component_1_1) {
-                trip_component_1 = trip_component_1_1;
+            function (trip_list_component_1_1) {
+                trip_list_component_1 = trip_list_component_1_1;
+            },
+            function (trip_edit_component_1_1) {
+                trip_edit_component_1 = trip_edit_component_1_1;
+            },
+            function (trips_service_1_1) {
+                trips_service_1 = trips_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -30,12 +39,13 @@ System.register(["angular2/core", "angular2/router", "./trip.component"], functi
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: "my-app",
-                        template: "\n        <h1>App Component</h1>\n        <router-outlet></router-outlet>\n    ",
+                        template: "\n        <router-outlet></router-outlet>\n    ",
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [router_1.ROUTER_PROVIDERS]
+                        providers: [http_1.HTTP_PROVIDERS, router_1.ROUTER_PROVIDERS, trips_service_1.TripsService]
                     }),
                     router_1.RouteConfig([
-                        { path: "/", name: "Trips", component: trip_component_1.TripComponent, useAsDefault: true }
+                        { path: "/trips", name: "TripsList", component: trip_list_component_1.TripListComponent, useAsDefault: true },
+                        { path: "/trip/:name", name: "TripEdit", component: trip_edit_component_1.TripEditComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

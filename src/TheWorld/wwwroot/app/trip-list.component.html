@@ -1,10 +1,14 @@
-﻿<wait-cursor *ngIf="isBusy"></wait-cursor>
-<table class="table table-responsive table-striped">
-    <tr *ngFor="#trip of trips">
-        <td>{{ trip.name }}</td>
-        <td>{{ trip.created | datePipe }}</td>
-        <td><button (click)="onSelect(trip)" class="btn btn-sm btn-primary">Manage</button></td>
-    </tr>
-</table>
+﻿<div>
+    <div class="col-md-6 col-md-offset-3">
+        <wait-cursor *ngIf="isBusy"></wait-cursor>
+        <table class="table table-responsive table-striped">
+            <tr *ngFor="#trip of trips">
+                <td>{{ trip.name }}</td>
+                <td>{{ trip.created | datePipe }}</td>
+                <td><button (click)="onSelect(trip)" class="btn btn-sm btn-primary">Manage</button></td>
+            </tr>
+        </table>
 
-<trip-form (onSubmit)="onSubmit($event)"></trip-form>
+        <trip-form (onSubmit)="onSubmit($event)"></trip-form>
+    </div>
+</div>

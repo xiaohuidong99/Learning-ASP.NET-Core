@@ -6,6 +6,7 @@
     "jquery": "^2.2.2",
     "jquery-validation": "^1.15.0",
     "jquery-validation-unobtrusive": "^3.2.6",
+    "travelmap": "^1.0.2",  
     "underscore": "^1.8.3"
   },
   "name": "TheWorld",
