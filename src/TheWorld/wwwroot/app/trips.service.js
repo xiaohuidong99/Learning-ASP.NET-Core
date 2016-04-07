@@ -45,8 +45,18 @@ System.register(["angular2/core", "angular2/http", "rxjs/Rx"], function(exports_
                     })
                         .catch(this.handleError);
                 };
-                TripsService.prototype.getStops = function (stop) {
-                    return this.http.get("/api/trips/" + stop + "/stops")
+                TripsService.prototype.getStops = function (tripName) {
+                    return this.http.get("/api/trips/" + tripName + "/stops")
+                        .map(function (response) {
+                        return response.json();
+                    })
+                        .catch(this.handleError);
+                };
+                TripsService.prototype.postStop = function (tripName, stop) {
+                    var body = JSON.stringify(stop);
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    return this.http.post("/api/trips/" + tripName + "/stops", body, options)
                         .map(function (response) {
                         return response.json();
                     })

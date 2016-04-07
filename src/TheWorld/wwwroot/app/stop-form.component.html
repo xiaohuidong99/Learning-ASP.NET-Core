@@ -1,0 +1,22 @@
+<form *ngIf="active" [ngFormModel]="stopForm" (ngSubmit)="add()">
+    <div class="form-group">
+        <label for="arrival">Date</label>
+        <input type="date" ngControl="arrival" id="arrival" required
+               [(ngModel)]="model.arrival" class="form-control"/>
+        <div *ngIf="arrival.dirty && !arrival.valid">
+            <span *ngIf="arrival.errors.required" class="text-warning">Date is required.</span>
+            <!--<span *ngIf="arrival.errors.pattern" class="text-warning">Date must be of pattern MM/DD/YYYY.</span>-->
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Location</label>
+        <input type="text" ngControl="name" id="name" required
+               [(ngModel)]="model.name" class="form-control" />
+        <div *ngIf="name.dirty && !name.valid">
+            <span *ngIf="name.errors.required" class="text-warning">Location is required.</span>
+            <span *ngIf="name.errors.minlength" class="text-warning">Location must be at least five characters.</span>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="!stopForm.valid" class="btn btn-success">Add</button>
+</form>

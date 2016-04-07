@@ -29,10 +29,22 @@ export class TripsService {
             .catch(this.handleError);
     }
 
-    getStops(stop: string) {
-        return this.http.get(`/api/trips/${stop}/stops`)
+    getStops(tripName: string) {
+        return this.http.get(`/api/trips/${tripName}/stops`)
             .map((response: Response) =>
                 <Stop[]>response.json()
+            )
+            .catch(this.handleError);
+    }
+
+    postStop(tripName: string, stop: Stop): Observable<Stop> {
+        const body = JSON.stringify(stop);
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
+
+        return this.http.post(`/api/trips/${tripName}/stops`, body, options)
+            .map((response: Response) =>
+                <Stop>response.json()
             )
             .catch(this.handleError);
     }

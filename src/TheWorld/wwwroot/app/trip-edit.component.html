@@ -17,19 +17,7 @@
             </tr>
         </table>
 
-        <form>
-            <div class="form-group">
-                <label>Date</label>
-                <input class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input class="form-control"/>
-            </div>
-            <div>
-                <input type="submit" value="Add" class="btn btn-success"/>
-            </div>
-        </form>
+        <stop-form (onSubmit)="onSubmit($event)"></stop-form>
     </div>
 
     <div class="col-md-9">
@@ -37,6 +25,3 @@
         <div id="map"></div>
     </div>
 </div>
-
-<script src="~/lib/gmaps/gmaps.min.js"></script>
-<script src="~/lib/travelmap/travelmap.min.js"></script>

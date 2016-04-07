@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./trips.service", "./loading", "./date.pipe"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "./stop-form.component", "./trips.service", "./loading", "./date.pipe"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/router", "./trips.service", "./loadi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, trips_service_1, loading_1, date_pipe_1;
+    var core_1, router_1, stop_form_component_1, trips_service_1, loading_1, date_pipe_1;
     var TripEditComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(["angular2/core", "angular2/router", "./trips.service", "./loadi
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (stop_form_component_1_1) {
+                stop_form_component_1 = stop_form_component_1_1;
             },
             function (trips_service_1_1) {
                 trips_service_1 = trips_service_1_1;
@@ -30,7 +33,7 @@ System.register(["angular2/core", "angular2/router", "./trips.service", "./loadi
                 date_pipe_1 = date_pipe_1_1;
             }],
         execute: function() {
-            ////import "travelmap/travelmap";
+            //declare var travelMap: any;
             TripEditComponent = (function () {
                 function TripEditComponent(routeParams, tripsService) {
                     this.routeParams = routeParams;
@@ -42,11 +45,18 @@ System.register(["angular2/core", "angular2/router", "./trips.service", "./loadi
                     this.isBusy = true;
                     this.tripsService.getStops(this.tripName)
                         .subscribe(function (stops) { return _this.stops = stops; }, function (error) { return console.log("There was an error: " + error); }, function () { return _this.isBusy = false; });
+                    //this.showMap(this.stops);
+                };
+                TripEditComponent.prototype.onSubmit = function (newStop) {
+                    var _this = this;
+                    this.isBusy = true;
+                    this.tripsService.postStop(this.tripName, newStop)
+                        .subscribe(function (stop) { return _this.stops.push(stop); }, function (error) { return console.log("There was an error: " + error); }, function () { return _this.isBusy = false; });
                 };
                 TripEditComponent = __decorate([
                     core_1.Component({
                         templateUrl: "./trip-edit.component.html",
-                        directives: [router_1.ROUTER_DIRECTIVES, loading_1.Loading],
+                        directives: [router_1.ROUTER_DIRECTIVES, loading_1.Loading, stop_form_component_1.StopFormComponent],
                         pipes: [date_pipe_1.DatePipe]
                     }), 
                     __metadata('design:paramtypes', [router_1.RouteParams, trips_service_1.TripsService])

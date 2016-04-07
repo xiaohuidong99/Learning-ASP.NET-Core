@@ -6,9 +6,13 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Stop = (function () {
-                function Stop(name, arrival) {
+                function Stop(id, name, arrival, longitude, latitude, order) {
+                    this.id = id;
                     this.name = name;
                     this.arrival = arrival;
+                    this.longitude = longitude;
+                    this.latitude = latitude;
+                    this.order = order;
                 }
                 return Stop;
             }());
